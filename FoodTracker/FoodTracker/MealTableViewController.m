@@ -24,10 +24,19 @@
     [super viewDidLoad];
     
     _deleteArray = [NSMutableArray new];
+    _mealsArray = [NSMutableArray new];
     
-    // 加载示例数据
-    [self loadSampleMeals];
-    [self loadBarButtonItems];
+    // 加载数据
+    if ([self loadMealData] != nil)
+    {
+        NSArray *loadMealArray = [self loadMealData];
+        [_mealsArray addObjectsFromArray:loadMealArray];
+    }
+    else
+    {
+        [self loadSampleMeals];
+    }
+        [self loadBarButtonItems];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -138,6 +147,7 @@
         self.tableView.editing = false;
         
         [_mealsArray removeObjectsInArray:_deleteArray];
+        [self saveMealData];
         [self.tableView reloadData];
     }
 }
@@ -253,8 +263,36 @@
                                       withRowAnimation:UITableViewRowAnimationTop];
                 
             }
+            
+            // Save Meal Data
+            [self saveMealData];
         }
     }
 }
+
+#pragma mark -Save Data
+
+-(void)saveMealData
+{
+    BOOL isSuccessfull = [NSKeyedArchiver archiveRootObject:_mealsArray toFile:[Meal filePath]];
+    
+    if (!isSuccessfull)
+    {
+        NSLog(@"Failed to save data");
+    }
+}
+
+-(NSArray *)loadMealData
+{
+    if ([NSKeyedUnarchiver unarchiveObjectWithFile:[Meal filePath]] != nil)
+    {
+        NSArray *loadArr = [NSKeyedUnarchiver unarchiveObjectWithFile:[Meal filePath]];
+        return loadArr;
+    }
+    
+    else
+        return nil;
+}
+
 
 @end

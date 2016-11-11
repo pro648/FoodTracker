@@ -24,8 +24,6 @@
     [super viewDidLoad];
     [_ratingControl layoutIfNeeded];
     
-    [self checkValidMealName];
-    
     _nameTextField.delegate = self;
     _photoImageView.userInteractionEnabled = true;
     _nameTextField.userInteractionEnabled = true;
@@ -37,6 +35,8 @@
         self.photoImageView.image = _meal.photo;
         self.ratingControl.rating = _meal.rating;
     }
+    
+    [self checkValidMealName];
 }
 
 #pragma mark -Actions-
@@ -124,6 +124,5 @@
     else
         [self.navigationController popViewControllerAnimated:true];
 }
-
 
 @end

@@ -17,4 +17,29 @@
     _rating = rating;
 }
 
+-(void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:_name forKey:@"MealNameKey"];
+    [aCoder encodeObject:_photo forKey:@"MealPhotoKey"];
+    [aCoder encodeInteger:_rating forKey:@"MealRatingKey"];
+}
+
+-(instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    _name = [aDecoder decodeObjectForKey:@"MealNameKey"];
+    _photo = [aDecoder decodeObjectForKey:@"MealPhotoKey"];
+    _rating = [aDecoder decodeIntegerForKey:@"MealRatingKey"];
+    
+    return self;
+}
+
++(NSString *)filePath
+{
+    NSArray *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true);
+    NSString *documentDirectoryPath = [path objectAtIndex:0];
+    NSString *filePath = [documentDirectoryPath stringByAppendingPathComponent:@"componentData"];
+    
+    return filePath;
+}
+
 @end

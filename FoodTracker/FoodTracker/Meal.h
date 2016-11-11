@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface Meal : NSObject
+@interface Meal : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) UIImage *photo;
 @property (assign, nonatomic) NSUInteger rating;
 
 -(void) setName:(NSString *)name :(UIImage *)photo :(NSUInteger)rating;
++(NSString *)filePath;
 
 @end
